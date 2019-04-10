@@ -5,11 +5,11 @@ import java.util.ArrayList;
 public class Calculations
 {
 
-    private ArrayList<Player> allPlayers;
-
-    public void setAllPlayers(ArrayList<Player> players)
+    private Parser parser;
+    
+    public void setParser(Parser parser)
     {
-        allPlayers = players;
+        this.parser = parser;
     }
 
     /**
@@ -128,6 +128,41 @@ public class Calculations
         System.out.println("" + player.getName() + " has a TRB% of " + result + "%");
         return result;
     }
+    
+    public double ORBP(Player player) throws Exception {
+        
+        double total = 0;
+        double count = 0;
+
+        for (Game game: player.getTeam().getGames())
+        {
+            total = total + game.getStatTeam("oreb", game.getOppTeam(player.getTeam().getID()).getID());
+            count++;
+        }
+        double oppTRB = total/count;
+
+        double result = 100 * (player.getStat("oreb") * (player.getTeam().getStat("minutes") / 5))/ (player.getStat("minutes") * (player.getTeam().getStat("oreb") + oppTRB));
+        System.out.println("" + player.getName() + " has a ORB% of " + result + "%");
+        return result;
+        
+    }
+    
+    public double DRBP(Player player) throws Exception {
+        double total = 0;
+        double count = 0;
+
+        for (Game game: player.getTeam().getGames())
+        {
+            total = total + game.getStatTeam("dreb", game.getOppTeam(player.getTeam().getID()).getID());
+            count++;
+        }
+        double oppTRB = total/count;
+
+        double result = 100 * (player.getStat("dreb") * (player.getTeam().getStat("minutes") / 5))/ (player.getStat("minutes") * (player.getTeam().getStat("dreb") + oppTRB));
+        System.out.println("" + player.getName() + " has a DRB% of " + result + "%");
+        return result;
+        
+    }
 
     /**
      * The assist percentage of a player
@@ -219,6 +254,35 @@ public class Calculations
         return result;
     }
 
+    public double selectCalc(String advStat, Player player) throws Exception { 
+        
+        switch (advStat) {
+            case "eFG":
+                eFG(player);
+            case "TSG":
+                TSG(player);
+            case "ORBP":
+                ORBP(player);
+            case "DRBP":
+                DRBP(player);
+            case "TRBP":    
+                TRBP(player);
+            case "ASTP":
+                ASTP(player);
+            case "STLP":
+                STLP(player);
+            case "BLKP":
+                BLKP(player);
+            case "TOVP":    
+                TOVP(player);
+            case "USGR":
+                USGR(player);
+            default:    
+                return 0.0;
+        }
+        
+    }
+    
     /**
      * Returns an integer number based on if a player is below, above or at league average in a particular stat category.
      * 1 is above average, 2 is league average and 3 is below league average
@@ -227,12 +291,13 @@ public class Calculations
      * @return the integer that gives the signal
      * @throws Exception
      */
-    public int leagueAVG(Player player, String stat) throws Exception
+    public char leagueAVG(Player player, String stat) throws Exception
     {
         double leagueAVG = 0;
         ArrayList<Player> samePos = new ArrayList<>();
-
-        for (Player p : allPlayers)
+        String[] simpleStats = {"points", "assists", "treb", "minutes", "steal", "block", "turnovers"};
+        
+        for (Player p : parser.getAllPlayers())
         {
             if (p.getPosition() == player.getPosition())
             {
@@ -243,30 +308,70 @@ public class Calculations
         double total = 0;
         double count = 0;
 
-        for (Player p : samePos)
+        for (String statistic : simpleStats)
         {
-            total = total + p.getStat(stat);
-            count++;
+            if (stat.equals(statistic))
+            {
+                for (Player p : samePos)
+                {
+                    total = total + p.getStat(stat);
+                    count++;
+                }
+            }
+            else
+            {
+                for (Player p : samePos)
+                {
+                    total = total + selectCalc(stat, p);
+                    count++;
+                }
+            }
         }
-
+        
+        
         leagueAVG = total/count;
 
-        if (leagueAVG < player.getStat(stat))
+        
+        if (stat.equals("TOVP"))
         {
-            System.out.println("" + player.getName() + " is above the league average in " + stat + ".");
-            return 1;
-        }
-        else if (leagueAVG == player.getStat(stat))
-        {
-            System.out.println("" + player.getName() + " is league average in " + stat + ".");
-            return 2;
+            if (leagueAVG < selectCalc(stat, player))
+            {
+                System.out.println("" + player.getName() + " is below the league average in " + stat + ".");
+                return '<';
+            }
+            else if (leagueAVG == selectCalc(stat, player))
+            {
+                System.out.println("" + player.getName() + " is league average in " + stat + ".");
+                return '=';
+            }
+            else 
+            {
+                System.out.println("" + player.getName() + " is above the league average in " + stat + ".");
+                return '>';
+            }
         }
         else
         {
-            System.out.println("" + player.getName() + " is below league average in " + stat + ".");
-            return 3;
+            if (leagueAVG < player.getStat(stat))
+            {
+                System.out.println("" + player.getName() + " is above the league average in " + stat + ".");
+                return '>';
+            }
+            else if (leagueAVG == player.getStat(stat))
+            {
+                System.out.println("" + player.getName() + " is league average in " + stat + ".");
+                return '=';
+            }
+            else
+            {
+                System.out.println("" + player.getName() + " is below league average in " + stat + ".");
+                return '<';
+            }
         }
+        
     }
+    
+    
 
 
 }

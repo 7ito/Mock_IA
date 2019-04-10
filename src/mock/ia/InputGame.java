@@ -14,11 +14,18 @@ import java.util.logging.Logger;
  */
 public class InputGame extends javax.swing.JFrame {
 
+    private GUIForm gui;
+    
     /**
      * Creates new form InputGame
      */
-    public InputGame() {
+    public InputGame(GUIForm gui) {
         initComponents();
+        this.gui = gui;
+    }
+
+    private InputGame() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -109,10 +116,9 @@ public class InputGame extends javax.swing.JFrame {
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         // TODO add your handling code here:
-        GUIForm obj;
+       
         try {
-            obj = new GUIForm();
-            obj.setVisible(true);
+            gui.setVisible(true);
             close();
         } catch (Exception ex) {
             Logger.getLogger(InputGame.class.getName()).log(Level.SEVERE, null, ex);

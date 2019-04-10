@@ -18,107 +18,52 @@ import java.util.*;
  */
 public class GUIForm extends javax.swing.JFrame {
 
-    private ArrayList<Player> allPlayers;
-    private ArrayList<Team> roster;
-    private Team blue;
-    private Team red;
-    private Team white;
-    private Team black;
-    private ArrayList<Game> allGames;
      
+    private Blue blue;
+    private Red red;
+    private White white;
+    private Black black;
+   
+    private SearchParser search;
+    private InputGame inputGame;
+    
     /**
      * Creates new form GUIForm
      */
     public GUIForm() throws Exception{
-        initComponents();
-        
-        allPlayers = new ArrayList<>();
-        roster = new ArrayList<>();
-        blue = new Team("Blue Army", 1);
-        red = new Team("Red Army", 2);
-        white = new Team("White Army", 3);
-        black = new Team("Black Army", 4);
-        allGames = new ArrayList<>();
-        
-        roster.add(blue);
-        roster.add(red);
-        roster.add(white);
-        roster.add(black);
-        
-        
-        initGames();
-        System.out.println(Arrays.toString(allGames.toArray()));
-        
+        initComponents();       
     }
     
-    public ArrayList<Player> getAllPlayers()
+    public void setBlue(Blue blue)
     {
-        return allPlayers;
+        this.blue = blue;
     }
     
-    public void addPlayer(Player player)
+    public void setRed(Red red)
     {
-        allPlayers.add(player);
+        this.red = red;
     }
     
-    public Team getTeam(int id)
+    public void setWhite(White white)
     {
-        
-        switch (id) {
-            case 1: 
-                return blue;
-            case 2:
-                return red;
-            case 3:
-                return white;
-            case 4:
-                return black;
-            default: 
-                return blue;
-        }
-                
+        this.white = white;
     }
     
-    public Team getTeamString(String team)
+    public void setBlack(Black black)
     {
-        switch (team) {
-            case "blue":
-                return blue;
-            case "red":
-                return red;
-            case "white":
-                return white;
-            case "black":
-                return black;
-            default:
-                return blue;
-        }
+        this.black = black;
     }
-    
-    public void initGames() throws Exception
-    {
-        ArrayList<String> finalGames = new ArrayList<>();
-        
-        for (int i = 0; i < Database.Main.getTables().size(); i++)
-        {
-            if (Database.Main.getTables().get(i).contains("_"))
-            {
-                finalGames.add(Database.Main.getTables().get(i));
-            }
-        }
-        
-        for (int i = 0; i < finalGames.size(); i++)
-        {
-            Game game;
-            game = new Game(finalGames.get(i), getTeamString(finalGames.get(i).substring(0, finalGames.get(i).indexOf("_"))), getTeamString(finalGames.get(i).substring(finalGames.get(i).indexOf("_")+1, finalGames.get(i).length())));
-            allGames.add(game);
-        }
-        
-    }
-    
-    
-    
    
+    public void setSearcher(SearchParser search)
+    {
+        this.search = search;
+    }
+    
+    public void setInputGame(InputGame inputGame)
+    {
+        this.inputGame = inputGame;
+    }
+    
     /**
      * This method is called from within the constructor to initialise the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -140,6 +85,7 @@ public class GUIForm extends javax.swing.JFrame {
         WhiteButton1 = new javax.swing.JButton();
         RedButton1 = new javax.swing.JButton();
         input = new javax.swing.JButton();
+        advancedSearch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -198,6 +144,13 @@ public class GUIForm extends javax.swing.JFrame {
             }
         });
 
+        advancedSearch.setText("Advanced Search");
+        advancedSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                advancedSearchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -205,6 +158,13 @@ public class GUIForm extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(LeagueLogo1)
+                        .addGap(18, 18, 18)
+                        .addComponent(TeamsText1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                        .addComponent(input)
+                        .addGap(46, 46, 46))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,14 +181,12 @@ public class GUIForm extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(RedButton1)
                                     .addComponent(WhiteButton1)
-                                    .addComponent(BlackButton1)))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(LeagueLogo1)
-                        .addGap(18, 18, 18)
-                        .addComponent(TeamsText1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
-                        .addComponent(input)))
-                .addContainerGap())
+                                    .addComponent(BlackButton1))))
+                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(advancedSearch)
+                .addGap(15, 15, 15))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,7 +214,9 @@ public class GUIForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BlackButton1)
                     .addComponent(BlackLogo1))
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(advancedSearch)
+                .addGap(49, 49, 49))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -281,15 +241,14 @@ public class GUIForm extends javax.swing.JFrame {
     public void close()
     {
         this.setVisible(false);
-        this.dispose();
+        
     }
     
     private void BlueButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BlueButton1ActionPerformed
         // TODO add your handling code here:
-        Blue obj;
+
         try {
-            obj = new Blue();
-            obj.setVisible(true);
+            blue.setVisible(true);
             close();
         } catch (Exception ex) {
             Logger.getLogger(GUIForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -298,10 +257,9 @@ public class GUIForm extends javax.swing.JFrame {
 
     private void RedButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RedButton1ActionPerformed
         // TODO add your handling code here:
-        Red obj;
+        
         try {
-            obj = new Red();
-            obj.setVisible(true);
+            red.setVisible(true);
             close();
         } catch (Exception ex) {
             Logger.getLogger(GUIForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -311,10 +269,9 @@ public class GUIForm extends javax.swing.JFrame {
 
     private void WhiteButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WhiteButton1ActionPerformed
         // TODO add your handling code here:
-        White obj;
+        
         try {
-            obj = new White();
-            obj.setVisible(true);
+            white.setVisible(true);
             close();
         } catch (Exception ex) {
             Logger.getLogger(GUIForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -324,10 +281,9 @@ public class GUIForm extends javax.swing.JFrame {
 
     private void BlackButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BlackButton1ActionPerformed
         // TODO add your handling code here:
-        Black obj;
+
         try {
-            obj = new Black();
-            obj.setVisible(true);
+            black.setVisible(true);
             close();
         } catch (Exception ex) {
             Logger.getLogger(GUIForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -336,10 +292,17 @@ public class GUIForm extends javax.swing.JFrame {
 
     private void inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputActionPerformed
         // TODO add your handling code here:
-        InputGame obj = new InputGame();
-        obj.setVisible(true);
+       
+        inputGame.setVisible(true);
         close();
     }//GEN-LAST:event_inputActionPerformed
+
+    private void advancedSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_advancedSearchActionPerformed
+        // TODO add your handling code here:
+        
+        search.setVisible(true);
+        close();
+    }//GEN-LAST:event_advancedSearchActionPerformed
 
     
     
@@ -394,6 +357,7 @@ public class GUIForm extends javax.swing.JFrame {
     private javax.swing.JLabel TeamsText1;
     private javax.swing.JButton WhiteButton1;
     private javax.swing.JLabel WhiteLogo1;
+    private javax.swing.JButton advancedSearch;
     private javax.swing.JButton input;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

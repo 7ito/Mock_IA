@@ -1,5 +1,6 @@
 package mock.ia;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
     
     public class Team
@@ -217,12 +218,13 @@ import java.util.ArrayList;
         public String[] average() throws Exception
         {
             String[] output = new String[5];
+            DecimalFormat value = new DecimalFormat("#.#");
             Calculations calculator = new Calculations();
-            output[0] = "" + calculator.PPG(this);
-            output[1] = "" + calculator.oppPPG(this);
-            output[2] = "" + calculator.pace(this);
-            output[3] = "" + calculator.ORTG(this);
-            output[4] = "" + calculator.DRTG(this);
+            output[0] = "" + value.format(calculator.PPG(this));
+            output[1] = "" + value.format(calculator.oppPPG(this));
+            output[2] = "" + value.format(calculator.pace(this));
+            output[3] = "" + value.format(calculator.ORTG(this));
+            output[4] = "" + value.format(calculator.DRTG(this));
             return output;
     
         }

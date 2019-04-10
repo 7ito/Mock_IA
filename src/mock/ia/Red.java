@@ -14,11 +14,24 @@ import java.util.logging.Logger;
  */
 public class Red extends javax.swing.JFrame {
 
+    private GUIForm gui;
+    private Parser parser;
+    
     /**
      * Creates new form Red
      */
-    public Red() throws Exception {
+    public Red(Parser parser) throws Exception {
+        this.parser = parser;
         initComponents();
+    }
+
+    private Red() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void setGUI(GUIForm gui)
+    {
+        this.gui = gui;
     }
 
     /**
@@ -36,20 +49,15 @@ public class Red extends javax.swing.JFrame {
         RedLogo1 = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
+        Team team = parser.getTeam(2);
         String output = "";
-        String[][] data = new String[Database.Main.length("red")+1][10];
-        GUIForm GUI = new GUIForm();
-        String[] columns = {"Name", "Position", "#", "PPG", "APG", "RPG", "MPG", "STLPG", "BLKPG", "TOPG"};
+        String[][] data = new String[team.getPlayers().size() + 1][12];
+        String[] columns = {"Name", "Position", "#", "PPG", "APG", "RPG", "OREB", "DREB", "MPG", "STLPG", "BLKPG", "TOPG"};
         data[0] = columns;
 
-        for (int p = 1; p < Database.Main.length("red")+1; p++)
+        for (int p = 1; p < team.getPlayers().size() + 1; p++)
         {
-            Player current = new Player(Database.Main.get(p, "name", "red"), Integer.parseInt(Database.Main.get(p, "num", "red")), Integer.parseInt(Database.Main.get(p, "pos", "red")), GUI.getTeam(2));
-            for (Game g : GUI.getTeam(2).getGames())
-            {
-                current.addGame(g);
-            }
-            data[p] = current.averages();
+            data[p] = team.getPlayers().get(p-1).averages();
         }
 
         for (int row = 0; row<data.length; row++)
@@ -65,11 +73,6 @@ public class Red extends javax.swing.JFrame {
         String result = "";
         String[][] dataset = new String[2][5];
 
-        Team team = GUI.getTeam(2);
-        for (Game g : GUI.getTeam(2).getGames())
-        {
-            team.addGame(g);
-        }
         dataset[1] = team.average();
 
         String[] categories = {"PPG", "Opp PPG", "Pace", "OffRtg", "DefRtg"};
@@ -169,15 +172,13 @@ public class Red extends javax.swing.JFrame {
     public void close()
     {
         this.setVisible(false);
-        this.dispose();
     }
     
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
-        GUIForm obj;
+        
         try {
-            obj = new GUIForm();
-            obj.setVisible(true);
+            gui.setVisible(true);
             close();
         } catch (Exception ex) {
             Logger.getLogger(Red.class.getName()).log(Level.SEVERE, null, ex);

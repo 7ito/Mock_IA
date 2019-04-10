@@ -2,6 +2,7 @@ package mock.ia;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.text.DecimalFormat;
 
 public class Player
 {
@@ -10,6 +11,7 @@ public class Player
     private int position;
     private ArrayList<Game> games;
     private Team team;
+    private Calculations calc;
 
     public Player(String name, int num, int position, Team team)
     {
@@ -18,8 +20,14 @@ public class Player
         this.position = position;
         this.games = new ArrayList<>();
         this.team = team;
+        calc = new Calculations();
     }
 
+    public void setCalcParser(Parser parser)
+    {
+        calc.setParser(parser);
+    }
+    
     public void setName(String name)
     {
         this.name = name;
@@ -178,21 +186,81 @@ public class Player
 
     public String[] averages() throws Exception
     {
-        String[] output = new String[10];
+        String[] output = new String[12];
+        DecimalFormat value = new DecimalFormat("#.#");
         output[0] = getName();
         output[1] = getPosString();
         output[2] = "" + getNum();
-        output[3] = "" + getStat("points");
-        output[4] = "" + getStat("assists");
-        output[5] = "" + getStat("treb");
-        output[6] = "" + getStat("minutes");
-        output[7] = "" + getStat("steal");
-        output[8] = "" + getStat("block");
-        output[9] = "" + getStat("turnovers");
+        output[3] = "" + value.format(getStat("points"));
+        output[4] = "" + value.format(getStat("assists"));
+        output[5] = "" + value.format(getStat("treb"));
+        output[6] = "" + value.format(getStat("oreb"));
+        output[7] = "" + value.format(getStat("dreb"));
+        output[8] = "" + value.format(getStat("minutes"));
+        output[9] = "" + value.format(getStat("steal"));
+        output[10] = "" + value.format(getStat("block"));
+        output[11] = "" + value.format(getStat("turnovers"));
 
         System.out.println(Arrays.toString(output));
         return output;
     }
 
+    public String[] advanced() throws Exception
+    {
+        String[] output = new String[10];
+        DecimalFormat value = new DecimalFormat("#.#");
+        
+        output[0] = "" + value.format(calc.eFG(this));
+        output[1] = "" + value.format(calc.TSG(this));
+        output[2] = "" + value.format(calc.ORBP(this));
+        output[3] = "" + value.format(calc.DRBP(this));
+        output[4] = "" + value.format(calc.TRBP(this));
+        output[5] = "" + value.format(calc.ASTP(this));
+        output[6] = "" + value.format(calc.STLP(this));
+        output[7] = "" + value.format(calc.BLKP(this));
+        output[8] = "" + value.format(calc.TOVP(this));
+        output[9] = "" + value.format(calc.USGR(this));
+        
+        System.out.println(Arrays.toString(output));
+        return output;
+    }
+    
+    public String[] advancedCompare() throws Exception
+    {
+        
+        String[] output = new String[10];
+        
+        output[0] = "" + calc.leagueAVG(this, "eFG");
+        output[1] = "" + calc.leagueAVG(this, "TSG");
+        output[2] = "" + calc.leagueAVG(this, "ORBP");
+        output[3] = "" + calc.leagueAVG(this, "DRBP");
+        output[4] = "" + calc.leagueAVG(this, "TRBP");
+        output[5] = "" + calc.leagueAVG(this, "ASTP");
+        output[6] = "" + calc.leagueAVG(this, "STLP");
+        output[7] = "" + calc.leagueAVG(this, "BLKP");
+        output[8] = "" + calc.leagueAVG(this, "TOVP");
+        output[9] = "" + calc.leagueAVG(this, "USGR");
+        
+        return output;
+    }
+    
+    public String[] per36() throws Exception
+    {
+        String[] output = new String[9];
+        DecimalFormat value = new DecimalFormat("#.#");
+        
+        output[0] = "" + value.format(calc.per36(this, "points"));
+        output[1] = "" + value.format(calc.per36(this, "assists"));
+        output[2] = "" + value.format(calc.per36(this, "treb"));
+        output[3] = "" + value.format(calc.per36(this, "oreb"));
+        output[4] = "" + value.format(calc.per36(this, "dreb"));
+        output[5] = "" + value.format(calc.per36(this, "minutes"));
+        output[6] = "" + value.format(calc.per36(this, "steal"));
+        output[7] = "" + value.format(calc.per36(this, "block"));
+        output[8] = "" + value.format(calc.per36(this, "turnovers"));
+        
+        return output;
+        
+    }
 
 }
