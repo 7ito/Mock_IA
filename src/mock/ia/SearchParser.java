@@ -7,6 +7,7 @@ package mock.ia;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 
 /**
  *
@@ -30,6 +31,10 @@ public class SearchParser extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    /**
+     * Sets the GUIForm object that the back button will switch the JFrame to
+     * @param gui 
+     */
     public void setGUI(GUIForm gui)
     {
         this.gui = gui;
@@ -51,6 +56,7 @@ public class SearchParser extends javax.swing.JFrame {
         title = new javax.swing.JLabel();
         search = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
+        errorLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,6 +89,8 @@ public class SearchParser extends javax.swing.JFrame {
             }
         });
 
+        errorLabel.setText("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -90,12 +98,6 @@ public class SearchParser extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(inputNum, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(teamSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -106,10 +108,21 @@ public class SearchParser extends javax.swing.JFrame {
                                 .addComponent(guideNum)
                                 .addGap(106, 106, 106)
                                 .addComponent(guideTeam)))
-                        .addContainerGap(15, Short.MAX_VALUE))))
+                        .addContainerGap(15, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(inputNum, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(111, 111, 111)
+                        .addComponent(teamSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(72, 72, 72))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(111, 111, 111)
-                .addComponent(search)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(errorLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(search)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -124,26 +137,36 @@ public class SearchParser extends javax.swing.JFrame {
                     .addComponent(guideNum)
                     .addComponent(guideTeam))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(inputNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(teamSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(teamSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inputNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(errorLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(search)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGap(15, 15, 15))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Used to close and dispose this object on JFrame switch
+     */
     public void close() {
         this.setVisible(false);
         dispose();
     }
     
+    
     private void inputNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputNumActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_inputNumActionPerformed
 
+    /**
+     * Takes the input and created the Advanced display object through the inputs
+     * @param evt 
+     */
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
         // TODO add your handling code here:
         
@@ -151,7 +174,15 @@ public class SearchParser extends javax.swing.JFrame {
         String team = (String) teamSelect.getSelectedItem();
         
         try {
+            int num = Integer.parseInt(input);
+        }
+        catch (NumberFormatException e) {
+            errorLabel.setText("Invalid input please put a number");
+        }
+        
+        try {
             Advanced obj = new Advanced(parser.getPlayer(Integer.parseInt(input), parser.getTeamString(team)), this);
+            inputNum.setText("");
             obj.setVisible(true);
             close();
         } catch (Exception ex) {
@@ -159,6 +190,10 @@ public class SearchParser extends javax.swing.JFrame {
         }   
     }//GEN-LAST:event_searchActionPerformed
 
+    /**
+     * Returns to the GUIForm object
+     * @param evt 
+     */
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
         
@@ -170,6 +205,11 @@ public class SearchParser extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_backButtonActionPerformed
 
+    public JLabel getErrorLabel()
+    {
+        return errorLabel;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -207,6 +247,7 @@ public class SearchParser extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
+    private javax.swing.JLabel errorLabel;
     private javax.swing.JLabel guideNum;
     private javax.swing.JLabel guideTeam;
     private javax.swing.JTextField inputNum;

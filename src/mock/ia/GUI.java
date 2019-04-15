@@ -1,10 +1,15 @@
 package mock.ia;
 
-import java.util.ArrayList;
 
 public class GUI
 {
     
+    /**
+     * Initialises every object needed and assigns the correct 
+     * &variables in order to make the program run correctly.
+     * @param args
+     * @throws Exception 
+     */
     public static void main(String[] args) throws Exception {
         Parser parser = new Parser();
         parser.init();
@@ -31,8 +36,5 @@ public class GUI
         GUI.setWhite(white);
         GUI.setBlack(black);
         GUI.setVisible(true);
-        
-        
-        
     }
 }

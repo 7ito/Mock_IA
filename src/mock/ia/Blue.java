@@ -5,9 +5,7 @@
  */
 package mock.ia;
 
-import static java.awt.Color.red;
-import static java.awt.Color.white;
-import java.util.Arrays;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,11 +31,11 @@ public class Blue extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public void setParser(Parser parser) 
-    {
-        this.parser = parser;
-    }
 
+    /**
+     * Setter method to set the gui used to return to on back button
+     * @param gui 
+     */
     public void setGUI(GUIForm gui) throws Exception {
         this.gui = gui;
     }
@@ -58,8 +56,7 @@ public class Blue extends javax.swing.JFrame {
         backButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         String output = "";
-        Team team = new Team("test", 0);
-        team = parser.getTeam(1);
+        Team team = parser.getTeam(1);
         System.out.println(team.getName());
         String[][] data = new String[team.getPlayers().size() + 1][12];
         String[] columns = {"Name", "Position", "#", "PPG", "APG", "RPG", "OREB", "DREB", "MPG", "STLPG", "BLKPG", "TOPG"};
@@ -121,6 +118,7 @@ public class Blue extends javax.swing.JFrame {
         stats.setRows(5);
         jScrollPane1.setViewportView(stats);
 
+        advancedStats.setEditable(false);
         advancedStats.setColumns(20);
         advancedStats.setRows(5);
         jScrollPane3.setViewportView(advancedStats);
@@ -179,6 +177,10 @@ public class Blue extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Performs the switching of JFrames from this to the GUI
+     * @param evt 
+     */
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
         
@@ -191,6 +193,9 @@ public class Blue extends javax.swing.JFrame {
 
     }//GEN-LAST:event_backButtonActionPerformed
 
+    /**
+     * Used to close the JFrame on use of the backButton
+     */
     public void close()
     {
         this.setVisible(false);

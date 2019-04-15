@@ -10,6 +10,11 @@ import java.util.ArrayList;
         private ArrayList<Player> players;
         private ArrayList<Game> games;
     
+        /**
+         * Initialises the class object
+         * @param name name of the team
+         * @param id of the team
+         */
         public Team(String name, int id)
         {
             this.name = name;
@@ -18,56 +23,102 @@ import java.util.ArrayList;
             games = new ArrayList<>();
         }
     
+        /**
+         * Accessor method
+         * @return name
+         */
         public String getName()
         {
             return name;
         }
     
+        /**
+         * Accessor method
+         * @return team ID
+         */
         public int getID()
         {
             return id;
         }
     
+        /**
+         * Accessor method
+         * @return ArrayList players
+         */
         public ArrayList<Player> getPlayers()
         {
             return players;
         }
     
+        /**
+         * Accessor method
+         * @return ArrayList games
+         */
         public ArrayList<Game> getGames()
         {
             return games;
         }
     
+        /**
+         * Setter method for name
+         * @param name 
+         */
         public void setName(String name)
         {
             this.name = name;
         }
     
+        /**
+         * Setter method for id
+         * @param id 
+         */
         public void setID(int id)
         {
             this.id = id;
         }
     
+        /**
+         * Setter method for players
+         * @param players 
+         */
         public void setPlayers(ArrayList<Player> players)
         {
             this.players = players;
         }
     
+        /**
+         * Setter method for games
+         * @param games 
+         */
         public void setGames(ArrayList<Game> games)
         {
             this.games = games;
         }
     
+        /**
+         * Method that uses ArrayList .add to modify games
+         * @param game to add
+         */
         public void addGame(Game game)
         {
             games.add(game);
         }
         
+        /**
+         * Method that uses ArrayList.add to modify players
+         * @param player to add
+         */
         public void addPlayer(Player player)
         {
             players.add(player);
         }
     
+        /**
+         * Gets a statistic
+         * @param stat the statistic selected
+         * @return the average of that statistic throughout the team's games
+         * @throws Exception 
+         */
         public double getStat(String stat) throws Exception
         {
     
@@ -81,8 +132,8 @@ import java.util.ArrayList;
                 for (Game game: games)
                 {
                     total2PA = total2PA + game.getStatTeam("2pa", id);
-                    total2PM = total2PM + game.getStat("2pm", id);
-                    total3PA = total3PA + game.getStat("3pa", id);
+                    total2PM = total2PM + game.getStatTeam("2pm", id);
+                    total3PA = total3PA + game.getStatTeam("3pa", id);
                     total3PM = total3PM + game.getStatTeam("3pm" , id);
                 }
     
@@ -168,11 +219,11 @@ import java.util.ArrayList;
             }
             else if (stat.equals("FGA"))
             {
-                return game.getStatTeam("2pa", id) + game.getStat("3pa", id);
+                return game.getStatTeam("2pa", id) + game.getStatTeam("3pa", id);
             }
             else if (stat.equals("FGM"))
             {
-                return game.getStat("2pm", id) + game.getStat("2pa", id);
+                return game.getStatTeam("2pm", id) + game.getStatTeam("2pa", id);
             }
             else
             {
@@ -180,6 +231,11 @@ import java.util.ArrayList;
             }
         }
     
+        /**
+         * Returns the average possessions of a team, used in the Calculations class
+         * @return the average amount of possessions
+         * @throws Exception 
+         */
         public double avgPoss() throws Exception
         {
     
@@ -188,7 +244,7 @@ import java.util.ArrayList;
     
             for (Game game : games)
             {
-                total = game.getPossesions(id);
+                total = total + game.getPossesions(id);
                 count++;
             }
     
@@ -198,6 +254,11 @@ import java.util.ArrayList;
             return total;
         }
     
+        /**
+         * Returns the average amount of possessions of the opponent, used in the Calculations class
+         * @return the average amount of possessions by the opponent
+         * @throws Exception 
+         */
         public double oppAvgPoss() throws Exception
         {
             double count = 0;
@@ -205,7 +266,7 @@ import java.util.ArrayList;
     
             for (Game game: games)
             {
-                total = game.getPossesions(game.getOppTeam(id).getID());
+                total = total + game.getPossesions(game.getOppTeam(id).getID());
                 count++;
             }
     
@@ -215,6 +276,11 @@ import java.util.ArrayList;
             return total;
         }
     
+        /**
+         * Returns an array of the advanced statistics of a team used in the GUI class to display the values
+         * @return an array of statistics
+         * @throws Exception  
+         */
         public String[] average() throws Exception
         {
             String[] output = new String[5];

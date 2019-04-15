@@ -5,12 +5,10 @@
  */
 package mock.ia;
 
-import java.awt.event.*;
-import java.awt.*;
-import java.util.ArrayList;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.*;
+
         
 /**
  *
@@ -34,31 +32,55 @@ public class GUIForm extends javax.swing.JFrame {
         initComponents();       
     }
     
+    /**
+     * Setter method for blue
+     * @param blue 
+     */
     public void setBlue(Blue blue)
     {
         this.blue = blue;
     }
     
+    /**
+     * Setter method for red
+     * @param red 
+     */
     public void setRed(Red red)
     {
         this.red = red;
     }
     
+    /**
+     * Setter method for white
+     * @param white 
+     */
     public void setWhite(White white)
     {
         this.white = white;
     }
     
+    /**
+     * Setter method for black
+     * @param black 
+     */
     public void setBlack(Black black)
     {
         this.black = black;
     }
    
+    /**
+     * Setter method for the advanced searcher
+     * @param search 
+     */
     public void setSearcher(SearchParser search)
     {
         this.search = search;
     }
     
+    /**
+     * Setter method for inputGame
+     * @param inputGame 
+     */
     public void setInputGame(InputGame inputGame)
     {
         this.inputGame = inputGame;
@@ -238,12 +260,19 @@ public class GUIForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Used to switch JFrames
+     */
     public void close()
     {
         this.setVisible(false);
         
     }
     
+    /**
+     * Switches to Blue JFrame
+     * @param evt 
+     */
     private void BlueButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BlueButton1ActionPerformed
         // TODO add your handling code here:
 
@@ -255,6 +284,10 @@ public class GUIForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BlueButton1ActionPerformed
 
+    /**
+     * Switches to Red JFrame
+     * @param evt 
+     */
     private void RedButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RedButton1ActionPerformed
         // TODO add your handling code here:
         
@@ -267,6 +300,10 @@ public class GUIForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_RedButton1ActionPerformed
 
+    /**
+     * Switches to White JFrame
+     * @param evt 
+     */
     private void WhiteButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WhiteButton1ActionPerformed
         // TODO add your handling code here:
         
@@ -279,6 +316,10 @@ public class GUIForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_WhiteButton1ActionPerformed
 
+    /**
+     * Switches to Black JFrame
+     * @param evt 
+     */
     private void BlackButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BlackButton1ActionPerformed
         // TODO add your handling code here:
 
@@ -290,6 +331,10 @@ public class GUIForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BlackButton1ActionPerformed
 
+    /** 
+     * Switches to inputGame JFrame
+     * @param evt 
+     */
     private void inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputActionPerformed
         // TODO add your handling code here:
        
@@ -297,6 +342,10 @@ public class GUIForm extends javax.swing.JFrame {
         close();
     }//GEN-LAST:event_inputActionPerformed
 
+    /**
+     * Switches to the advanced searcher JFrame
+     * @param evt 
+     */
     private void advancedSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_advancedSearchActionPerformed
         // TODO add your handling code here:
         

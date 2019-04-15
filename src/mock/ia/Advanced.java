@@ -75,6 +75,21 @@ public class Advanced extends javax.swing.JFrame {
         back = new javax.swing.JButton();
         advancedLabel = new javax.swing.JLabel();
         per36label = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        String val = "";
+        String[][] basicStats = new String[2][9];
+        basicStats[0] = categories;
+        basicStats[1] = player.averagesPlayer();
+        for (int row = 0; row<basicStats.length; row++)
+        {
+            for (int column = 0; column<basicStats[row].length; column++)
+            {
+                val = val + basicStats[row][column] + "\t       ";
+            }
+            val = val + "\n";
+        }
+        averages = new javax.swing.JTextArea(val);
+        seasonAverages = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,12 +103,13 @@ public class Advanced extends javax.swing.JFrame {
         playerNum.setText(""+player.getNum());
 
         advancedStats.setEditable(false);
-        advancedStats.setColumns(20);
-        advancedStats.setRows(5);
+        advancedStats.setColumns(10);
+        advancedStats.setRows(1);
         jScrollPane1.setViewportView(advancedStats);
 
-        per36.setColumns(20);
-        per36.setRows(5);
+        per36.setEditable(false);
+        per36.setColumns(10);
+        per36.setRows(1);
         jScrollPane2.setViewportView(per36);
 
         back.setText("Back");
@@ -107,6 +123,13 @@ public class Advanced extends javax.swing.JFrame {
 
         per36label.setText("Per 36 Minutes");
 
+        averages.setEditable(false);
+        averages.setColumns(10);
+        averages.setRows(1);
+        jScrollPane3.setViewportView(averages);
+
+        seasonAverages.setText("Season Averages");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -114,6 +137,7 @@ public class Advanced extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(seasonAverages)
                     .addComponent(per36label)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
@@ -130,7 +154,8 @@ public class Advanced extends javax.swing.JFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(playerNum)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(back))))))
+                                    .addComponent(back))))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -149,24 +174,36 @@ public class Advanced extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(teamName, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(back))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(per36label)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(seasonAverages)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Closes the object and disposes of it
+     */
     public void close()
     {
         this.setVisible(false);
+        search.getErrorLabel().setText("");
         this.dispose();
     }
     
+    /**
+     * Goes back to the search object that initialized this instance
+     * @param evt 
+     */
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         // TODO add your handling code here:
         search.setVisible(true);
@@ -211,13 +248,16 @@ public class Advanced extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel advancedLabel;
     private javax.swing.JTextArea advancedStats;
+    private javax.swing.JTextArea averages;
     private javax.swing.JButton back;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea per36;
     private javax.swing.JLabel per36label;
     private javax.swing.JLabel playerName;
     private javax.swing.JLabel playerNum;
+    private javax.swing.JLabel seasonAverages;
     private javax.swing.JLabel teamName;
     // End of variables declaration//GEN-END:variables
 }

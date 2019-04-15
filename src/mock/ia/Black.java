@@ -20,7 +20,7 @@ public class Black extends javax.swing.JFrame {
     /**
      * Creates new form Black
      */
-    public Black(Parser parser) throws Exception{
+    public Black(Parser parser) throws Exception {
         this.parser = parser;
         initComponents();
     }
@@ -29,6 +29,10 @@ public class Black extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    /**
+     * Setter method to set the gui used to return to on back button
+     * @param gui 
+     */
     public void setGUI(GUIForm gui)
     {
         this.gui = gui;
@@ -112,6 +116,7 @@ public class Black extends javax.swing.JFrame {
         stats.setRows(5);
         jScrollPane3.setViewportView(stats);
 
+        advancedStats.setEditable(false);
         advancedStats.setColumns(20);
         advancedStats.setRows(5);
         jScrollPane1.setViewportView(advancedStats);
@@ -167,6 +172,10 @@ public class Black extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Performs the switching of JFrames from this to the GUI
+     * @param evt 
+     */
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
         try {
@@ -178,6 +187,9 @@ public class Black extends javax.swing.JFrame {
         
     }//GEN-LAST:event_backButtonActionPerformed
 
+    /**
+     * Used to close the JFrame on use of the backButton
+     */
     public void close()
     {
         this.setVisible(false);

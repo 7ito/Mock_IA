@@ -6,7 +6,13 @@ public class Calculations
 {
 
     private Parser parser;
+
+        
     
+    /**
+     * Setter method for the parser
+     * @param parser 
+     */
     public void setParser(Parser parser)
     {
         this.parser = parser;
@@ -103,7 +109,7 @@ public class Calculations
         double TSA = (player.getStat("2pa") + player.getStat("3pa")) + 0.44 * player.getStat("fta");
 
         System.out.println("" + player.getName() + " has a TSG% of " + (100*(player.getStat("points")/(2*TSA))) + "%");
-        return player.getStat("points")/(2*TSA);
+        return 100*(player.getStat("points")/(2*TSA));
     }
 
     /**
@@ -129,6 +135,12 @@ public class Calculations
         return result;
     }
     
+    /**
+     * The offensive rebounding percentage of a player
+     * @param player
+     * @return ORB%
+     * @throws Exception 
+     */
     public double ORBP(Player player) throws Exception {
         
         double total = 0;
@@ -147,6 +159,12 @@ public class Calculations
         
     }
     
+    /**
+     * The defensive rebounding percentage of a player
+     * @param player
+     * @return DRB%
+     * @throws Exception 
+     */
     public double DRBP(Player player) throws Exception {
         double total = 0;
         double count = 0;
@@ -240,6 +258,12 @@ public class Calculations
         return result;
     }
 
+    /**
+     * The offensive rating of a team
+     * @param team
+     * @return ORTG
+     * @throws Exception 
+     */
     public double ORTG(Team team) throws Exception
     {
         double result = (PPG(team)/team.avgPoss())*100;
@@ -247,6 +271,12 @@ public class Calculations
         return result;
     }
 
+    /**
+     * The defensive rating of a team
+     * @param team
+     * @return DRTG
+     * @throws Exception 
+     */
     public double DRTG(Team team) throws Exception
     {
         double result = (oppPPG(team)/team.oppAvgPoss()*100);
@@ -254,6 +284,13 @@ public class Calculations
         return result;
     }
 
+    /**
+     * Selects which calculation method to do.
+     * @param advStat the selected stat category
+     * @param player
+     * @return the value of that stat
+     * @throws Exception 
+     */
     public double selectCalc(String advStat, Player player) throws Exception { 
         
         switch (advStat) {

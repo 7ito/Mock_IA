@@ -9,6 +9,11 @@ import java.util.ArrayList;
 
 public class Main
 {
+    /**
+     * Main method used to test commands
+     * @param args
+     * @throws Exception 
+     */
     public static void main(String[] args) throws Exception {
         //createTable("Blue_White1");
         //post("Blue_White1", "Justin Tom", 2, 1, 19.3, 2, 4, 1, 1, 0, 0, 0, 3, 1, 0, 1, 1, 0, 2, 3, 1);
@@ -23,6 +28,11 @@ public class Main
         //post("Blue_White1", "Bernard Ocran", 1, 1,12.58, 20, 15, 10, 1, 0, 6, 0, 0, 7, 3, 4, 1, 1, 2, 2, 1);
     }
 
+    /**
+     * Returns a Connection object allowing other methods to connect to the SQL server
+     * @return Connection
+     * @throws Exception 
+     */
     public static Connection getConnection() throws Exception {
         try {
             String driver = "com.mysql.cj.jdbc.Driver";
@@ -42,6 +52,11 @@ public class Main
         return null;
     }
 
+    /**
+     * Creates a table for game data and identifies it by gameID
+     * @param gameID set gameID
+     * @throws Exception 
+     */
     public static void createTable(String gameID) throws Exception {
         try {
             Connection connection = getConnection();
@@ -93,6 +108,12 @@ public class Main
 
     }
 
+    /**
+     * Gets the amount of players from a team's roster table
+     * @param team
+     * @return
+     * @throws Exception 
+     */
     public static int length(String team) throws Exception
     {
         try {
@@ -113,6 +134,11 @@ public class Main
         }
     }
     
+    /**
+     * Gets an ArrayList of the names of all the tables
+     * @return list of the names of all the tables
+     * @throws Exception 
+     */
     public static ArrayList<String> getTables() throws Exception {
         try {
             Connection connection = getConnection();
@@ -134,6 +160,14 @@ public class Main
         
     }
     
+    /**
+     * Gets specific data of a player from a roster table
+     * @param playerNum the player identified
+     * @param data the data specified
+     * @param teamName the team identified
+     * @return
+     * @throws Exception 
+     */
     public static String get(int playerNum, String data, String teamName) throws Exception {
         try {
             Connection connection = getConnection();
@@ -155,10 +189,20 @@ public class Main
         }
     }
 
-    public static int getStat(int playerNum, String stat, String gameID) throws Exception {
+    /**
+     * Pulls statistics of a player from a game
+     * @param playerNum identified player
+     * @param stat selected statistic
+     * @param gameID selected game
+     * @param teamID the teamID of the player
+     * @return the statistic
+     * @throws Exception 
+     */
+    public static int getStat(int playerNum, String stat, String gameID, int teamID) throws Exception {
         try {
             Connection connection = getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT " + stat + " FROM " + gameID + " WHERE playerNum = " + playerNum + ";");
+            PreparedStatement statement = connection.prepareStatement
+            ("SELECT " + stat + " FROM " + gameID + " WHERE playerNum = " + playerNum + " AND team = " + teamID + ";");
 
             ResultSet result = statement.executeQuery();
 
@@ -175,10 +219,19 @@ public class Main
         }
     }
 
+    /**
+     * Gets the statistic of a team from a game
+     * @param teamID selected team
+     * @param stat selected statistic
+     * @param gameID selected game
+     * @return the statistic selected
+     * @throws Exception 
+     */
     public static ArrayList<Integer> getStatTeam(int teamID, String stat, String gameID) throws Exception {
         try {
             Connection connection = getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT " + stat + " FROM " + gameID + " WHERE team = " + teamID + ";");
+            PreparedStatement statement = connection.prepareStatement
+            ("SELECT " + stat + " FROM " + gameID + " WHERE team = " + teamID + ";");
 
             ResultSet result = statement.executeQuery();
 
